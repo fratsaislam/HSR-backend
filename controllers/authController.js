@@ -61,7 +61,6 @@ exports.testToken = async (req, res) => {
     return res.status(200).json({success: true, message: req.user});
 }
 
-// In your auth routes
 exports.checkAuth = async (req, res) => {
     try {
       const authHeader = req.headers.cookie;
@@ -91,4 +90,4 @@ exports.checkAuth = async (req, res) => {
     } catch (error) {
       return res.status(401).json({ success: false, message: 'Authentication failed' });
     }
-  };
+};

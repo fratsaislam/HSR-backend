@@ -15,7 +15,7 @@ const reviewRouter = require("./routers/reviewRouter");
 const galleryRouter = require("./routers/galleryRouter");
 
 const allowedOrigins = [
-    'https://hsr-web-tau.vercel.app',
+    'https://happystay-dz-web.vercel.app',
     'http://localhost:3000',
 ];
   
