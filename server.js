@@ -14,10 +14,22 @@ const reservRouter = require("./routers/reservRouter");
 const reviewRouter = require("./routers/reviewRouter");
 const galleryRouter = require("./routers/galleryRouter");
 
+const allowedOrigins = [
+    'https://hsr-web-tau.vercel.app',
+    'http://localhost:3000',
+];
+  
 app.use(cors({
-    origin: 'https://hsr-backend-1.onrender.com', 
-    credentials: true               // allow cookies and Authorization headers
+origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+    callback(null, true);
+    } else {
+    callback(new Error('Not allowed by CORS'));
+    }
+},
+credentials: true
 }));
+  
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());
