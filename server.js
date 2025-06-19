@@ -15,7 +15,7 @@ const reviewRouter = require("./routers/reviewRouter");
 const galleryRouter = require("./routers/galleryRouter");
 
 app.use(cors({
-    origin: 'http://localhost:3000', 
+    origin: 'https://hsr-backend-1.onrender.com', 
     credentials: true               // allow cookies and Authorization headers
 }));
 app.use(helmet());
