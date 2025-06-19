@@ -34,8 +34,9 @@ exports.signin = async (req, res) => {
                 `Bearer ${token}`,
                 {
                     expires: new Date(Date.now() + 8 * 3600000),
-                    httpOnly: process.env.NODE_ENV === "production",
-                    secure: process.env.NODE_ENV === "production",
+                    httpOnly: true,
+                    secure: true,         // ✅ Render uses HTTPS
+                    sameSite: "None"      // ✅ MUST be "None" to allow cross-origin cookies
                 }).status(200).json({
                     success: true,
                     token,
