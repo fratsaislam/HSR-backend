@@ -60,3 +60,35 @@ exports.signout = async (req, res) => {
 exports.testToken = async (req, res) => {
     return res.status(200).json({success: true, message: req.user});
 }
+
+// In your auth routes
+exports.checkAuth = async (req, res) => {
+    try {
+      const authHeader = req.headers.cookie;
+      
+      if (!authHeader) {
+        return res.status(401).json({ success: false, message: 'No token provided' });
+      }
+  
+      const cookieValue = authHeader.split('Authorization=')[1];
+      if (!cookieValue) {
+        return res.status(401).json({ success: false, message: 'Invalid cookie format' });
+      }
+  
+      const token = decodeURIComponent(cookieValue).replace('Bearer ', '');
+      
+      jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+        if (err) {
+          return res.status(401).json({ success: false, message: 'Invalid token' });
+        }
+        
+        return res.status(200).json({ 
+          success: true, 
+          user: { email: user.email, username: user.username },
+          message: 'Authenticated' 
+        });
+      });
+    } catch (error) {
+      return res.status(401).json({ success: false, message: 'Authentication failed' });
+    }
+  };
