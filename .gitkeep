@@ -1,5 +1,0 @@
-# Ignore all contents of uploads
-uploads/*
-
-# But keep the .gitkeep file
-!uploads/.gitkeep
