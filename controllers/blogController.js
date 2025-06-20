@@ -1,7 +1,6 @@
 const Blog = require("../models/blogModel");
 const cloudinary = require("../utils/cloudinary");
-const fsPromises = require("fs").promises;
-
+const fs = require("fs");
 
 exports.getBlogs = async (req, res) => {
     const { page } = req.query;
@@ -66,6 +65,9 @@ exports.createBlog = async (req, res) => {
             timeout: 60000  // timeout in milliseconds (60 seconds)
         });
 
+        fs.unlink(thumbnail.path, (err) => {
+            if (err) console.error("Failed to delete local file:", err);
+        });
 
         const data = await Blog.create({
             title,
@@ -96,7 +98,9 @@ exports.editBlogNewFile = async (req, res) => {
             timeout: 60000  // timeout in milliseconds (60 seconds)
         });
 
-        await fsPromises.unlink(thumbnail.path);
+        fs.unlink(thumbnail.path, (err) => {
+            if (err) console.error("Failed to delete local file:", err);
+        });
 
         existingBlog.title = title;
         existingBlog.description = description;
