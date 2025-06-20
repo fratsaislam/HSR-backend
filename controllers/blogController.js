@@ -1,6 +1,5 @@
 const Blog = require("../models/blogModel");
 const cloudinary = require("../utils/cloudinary");
-const fs = require("fs");
 const fsPromises = require("fs").promises;
 
 
@@ -67,7 +66,6 @@ exports.createBlog = async (req, res) => {
             timeout: 60000  // timeout in milliseconds (60 seconds)
         });
 
-        await fsPromises.unlink(thumbnail.path);
 
         const data = await Blog.create({
             title,
