@@ -92,7 +92,7 @@ exports.editBlogNewFile = async (req, res) => {
         if(!existingBlog){
             return res.status(400).json({ success: false, message: "blog does not exist!"});
         }
-        const url = cloudinary.uploader.upload(thumbnail.path, {
+        const url = await cloudinary.uploader.upload(thumbnail.path, {
             folder: "blog_thumbnails",
             public_id: title.replace(/\s+/g, "-").toLowerCase(), // optional custom name
             timeout: 60000  // timeout in milliseconds (60 seconds)
@@ -113,6 +113,7 @@ exports.editBlogNewFile = async (req, res) => {
         console.log(err);
     }
 }
+
 exports.editBlogNoFile = async (req, res) => {
     const { oldTitle } = req.query;
     const { title, description, body, thumbnail } = req.body;
